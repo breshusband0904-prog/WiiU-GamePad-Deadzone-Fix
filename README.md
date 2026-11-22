@@ -113,6 +113,8 @@ Please report results.
 
 GitHub Actions (`.github/workflows/build.yml`) runs the host unit tests and then builds both `.wps` files with the official `ghcr.io/wiiu-env/devkitppc` and `wiiupluginsystem` images. It also checks that `.wups.meta` declares `wups 0.9.1`.
 
+The pinned images are `ghcr.io/wiiu-env/devkitppc:20260504` and `ghcr.io/wiiu-env/wiiupluginsystem:20260503` (WUPS 0.9.1). The wut inside that devkitppc image is older than wut's 2026-06-01 VPAD header update. The code avoids the `VPADButtonProcMode` enum names that update added, so it compiles with either header version.
+
 To build locally:
 
 ```sh
