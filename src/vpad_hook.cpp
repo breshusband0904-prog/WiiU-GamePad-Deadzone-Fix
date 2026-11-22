@@ -36,6 +36,11 @@ static_assert((uint32_t) VPAD_STICK_L_EMULATION_UP == DRIFT_EMU_UP);
 static_assert((uint32_t) VPAD_STICK_L_EMULATION_DOWN == DRIFT_EMU_DOWN);
 
 namespace {
+    // VPADGetButtonProcMode(): wut releases before 2026-06-01 (as shipped in the
+    // devkitppc:20260504 image) declare it as returning BOOL; newer wut returns
+    // VPADButtonProcMode with VPAD_BUTTON_PROC_MODE_TIGHT == 1. Same ABI and value.
+    constexpr int kButtonProcModeTight = 1;
+
     struct Channel {
         ChannelGuard guard;
         // Guarded by `guard`:
@@ -100,7 +105,7 @@ DECL_FUNCTION(int32_t, VPADRead, VPADChan chan, VPADStatus *buffer, uint32_t buf
     c.rawY.store(rawY, std::memory_order_relaxed);
     c.rawValid.store(true, std::memory_order_release);
 
-    const int tight = VPADGetButtonProcMode(chan) == VPAD_BUTTON_PROC_MODE_TIGHT;
+    const int tight = (int) VPADGetButtonProcMode(chan) == kButtonProcModeTight;
 
     if (c.guard.tryAcquire()) {
         if (c.resetRequested.exchange(false, std::memory_order_acq_rel)) {

@@ -26,7 +26,7 @@ namespace {
     std::optional<WUPSButtonComboAPI::ButtonCombo> sToggleCombo;
 
     void toggleComboCallback(WUPSButtonCombo_ControllerTypes, WUPSButtonCombo_ComboHandle, void *) {
-        const bool nowEnabled = Settings::ToggleFromCombo();
+        [[maybe_unused]] const bool nowEnabled = Settings::ToggleFromCombo();
         VPADHook::RequestReset();
         DEBUG_FUNCTION_LINE("Toggle combo: drift compensation %s (saved at next safe point)", nowEnabled ? "ON" : "OFF");
     }
