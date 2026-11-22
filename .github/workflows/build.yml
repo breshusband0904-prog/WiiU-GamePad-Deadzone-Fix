@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Build toolchain image (devkitPPC + wut + WUPS)
         run: docker build . -t builder
@@ -22,7 +22,7 @@ jobs:
       - name: Check WUPS metadata and .wps header
         run: |
           docker run --rm -v "${PWD}:/project" builder \
-            sh -c 'powerpc-eabi-readelf -p .wups.meta GamePadDriftFix.elf' | tee meta.txt
+            sh -c '"$DEVKITPPC"/bin/powerpc-eabi-readelf -p .wups.meta GamePadDriftFix.elf' | tee meta.txt
           grep -q "wups 0.9.1" meta.txt
           # wups_rules patches 'PL' into the RPL ident at offset 9.
           test "$(dd if=GamePadDriftFix.wps bs=1 skip=9 count=2 status=none)" = "PL"

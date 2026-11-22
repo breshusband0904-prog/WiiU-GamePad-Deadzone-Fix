@@ -29,7 +29,7 @@ static void logSample(VPADChan chan, const VPADStatus *newest, int32_t count) {
 
     if (!sEnvelopeValid) {
         sMinX = sMaxX = x;
-        sMinY = sMaxY = y;
+        sMinY = sMaxY  = y;
         sEnvelopeValid = true;
     } else {
         if (x < sMinX) sMinX = x;
