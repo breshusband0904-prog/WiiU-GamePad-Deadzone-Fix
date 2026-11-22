@@ -5,3 +5,4 @@ build/
 tests/test_drift_filter
 .idea/
 .vscode/
+tests/test_sync
