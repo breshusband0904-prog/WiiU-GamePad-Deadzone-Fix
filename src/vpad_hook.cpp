@@ -125,10 +125,10 @@ DECL_FUNCTION(int32_t, VPADRead, VPADChan chan, VPADStatus *buffer, uint32_t buf
 #ifdef DEBUG
         if (doLog) {
             DEBUG_FUNCTION_LINE("chan %d n=%u %s %s | raw x=%+.4f y=%+.4f r=%.4f -> out x=%+.4f y=%+.4f | hold %08X trig %08X rel %08X",
-                                chan, count, tight ? "TIGHT" : "LOOSE", enable ? "ON " : "OFF",
+                                (int) chan, (unsigned) count, tight ? "TIGHT" : "LOOSE", enable ? "ON " : "OFF",
                                 rawX, rawY, std::sqrt(rawX * rawX + rawY * rawY),
                                 buffer[0].leftStick.x, buffer[0].leftStick.y,
-                                buffer[0].hold, buffer[0].trigger, buffer[0].release);
+                                (unsigned) buffer[0].hold, (unsigned) buffer[0].trigger, (unsigned) buffer[0].release);
         }
 #endif
     } else {
